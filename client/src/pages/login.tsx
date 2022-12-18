@@ -4,25 +4,27 @@ import InputGroup from '../components/InputGroup'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 
-const Register = () => {
-  const [email, setEmail] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [errors, setErrors] = useState<any>({})
+const Login = () => {
+    const router = useRouter()
 
-  const router = useRouter()
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [errors, setErrors] = useState<any>({})
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
     
     try {
-      const res = await axios.post('auth/register', {
-        email,
+      const res = await axios.post('auth/login', {
         username,
         password
+      },
+      {
+        withCredentials: true
       })
 
-      router.push('login')
+      console.log(res)
+      // router.push('login')
     } catch (error: any) {
       console.log(error)
       setErrors(error.response.data || {})
@@ -31,14 +33,8 @@ const Register = () => {
 
   return (
     <div>
-        <h1>회원가입</h1>
+        <h1>로그인</h1>
         <form onSubmit={handleSubmit}>
-            <InputGroup 
-              placeholder='email'
-              value={email}
-              setValue={setEmail}
-              error={errors.email}
-            />
             <InputGroup 
               placeholder='username'
               value={username}
@@ -52,16 +48,16 @@ const Register = () => {
               setValue={setPassword}
               error={errors.password}
             />
-            <button>회원가입</button>
+            <button>로그인</button>
         </form>
         <small>
-            이미 가입하셨나요?
-            <Link href="/login">
-              로그인
+            아직 아이디가 없나요?
+            <Link href="/register" className='text-red-500'>
+              회원가입
             </Link>
         </small>
     </div>
   )
 }
 
-export default Register
+export default Login

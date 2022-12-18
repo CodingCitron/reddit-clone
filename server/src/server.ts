@@ -3,6 +3,7 @@ import morgan from 'morgan'
 import { AppDataSource } from './data-source'
 import authRoute from './routes/auth'
 import cors from 'cors'
+import dotenv from 'dotenv'
 
 const app = express()
 const whitelist = ['http://192.168.50.224:3000', 'http://localhost:3000']
@@ -13,18 +14,21 @@ const corsOptions = {
 		} else {
 			callback(new Error('Not Allowed Origin'))
 		}
-	}
+	},
+	credentials: true
 }
 
 app.use(
-	cors(corsOptions)
+	cors(corsOptions),
 )
 
 app.use(express.json())
 app.use(morgan('dev'))
-app.get('/', (_, res) => res.send('running'))
 
-app.use('api/auth', authRoute)
+dotenv.config()
+
+app.get('/', (_, res) => res.send('running'))
+app.use('/api/auth', authRoute)
 
 let port = 4000
 
