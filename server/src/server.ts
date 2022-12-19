@@ -2,6 +2,7 @@ import express from 'express'
 import morgan from 'morgan'
 import { AppDataSource } from './data-source'
 import authRoute from './routes/auth'
+import subsRoute from './routes/subs'
 import cors from 'cors'
 import dotenv from 'dotenv'
 
@@ -29,6 +30,7 @@ dotenv.config()
 
 app.get('/', (_, res) => res.send('running'))
 app.use('/api/auth', authRoute)
+app.use('/api/subs', subsRoute)
 
 let port = 4000
 

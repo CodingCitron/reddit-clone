@@ -20,7 +20,7 @@ const register = async (req: Request, res: Response) => {
     console.log(email)
 
     try {
-        let errors:any = {} 
+        let errors: any = {} 
 
         // 이메일과 유저 이름이 이미 저장 사용되고 있는 것인지 확인
         const emailUser = await User.findOneBy({ email })
